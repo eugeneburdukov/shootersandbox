@@ -144,7 +144,7 @@ while game_is_running:
 
 
 if player1_won:
-    screen.blit(text_success1, (70, 100))
+    screen.blit(text_success1, (50, 100))
     screen.blit(text_success2, (150, 200))
     pygame.display.update()
     pygame.time.wait(5000)
