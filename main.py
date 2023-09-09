@@ -11,7 +11,7 @@ sound1 = pygame.mixer.Sound('images/bottle-open-14895-trim.mp3')
 sound2 = pygame.mixer.Sound('images/match-sizzle-02-104778.mp3')
 text_counter = "XLOP"
 text_surface = text_font.render('Вымпил = ', False, 'White')
-text_game_over = text_font.render("Игрок 2 не вымпил!", False, 'White')
+text_game_over = text_font.render("Игрок 2 не домпил!", False, 'White')
 text_game_over1 = text_font.render("Ты проиграл!", False, 'Red')
 text_success1 = text_font.render("Ты победил! Началась", False, 'Green')
 text_success2 = text_font.render("Чистая эмпирика!", False, 'White')
