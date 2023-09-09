@@ -5,28 +5,46 @@ from random import randint
 
 pygame.init()
 
-screen_width, screen_height = 1024, 768
+clock = pygame.time.Clock()
+
+screen_width, screen_height = 1024, 774
 screen = pygame.display.set_mode((screen_width, screen_height))
 
 pygame.display.set_caption("Does it have any sense?")
-screencolor = (248, 248, 248)
+screencolor = (0, 0, 0)
+
+back0 = pygame.image.load('images/backor0.png')
+back1 = pygame.image.load('images/backor1.png')
+back2 = pygame.image.load('images/backor2.png')
+back3 = pygame.image.load('images/backor3.png')
+back4 = pygame.image.load('images/backor4.png')
+back5 = pygame.image.load('images/backor5.png')
+back6 = pygame.image.load('images/backor6.png')
+back7 = pygame.image.load('images/backor7.png')
+back8 = pygame.image.load('images/backor8.png')
+back9 = pygame.image.load('images/backor9.png')
 
 fighter_image = pygame.image.load('images/player1.png')
 alcohol_image = pygame.image.load('images/alcohol.png')
 killer_image = pygame.image.load('images/player2.png')
+killer1_image = pygame.image.load('images/player2_alternative.png')
+
+counter = 0
+image_counter = [back0, back1, back2, back3, back4, back5, back6, back7, back8, back9, back0]
 
 fighter_image_width, fighter_image_height = fighter_image.get_size()
 alcohol_image_width, alcohol_image_height = alcohol_image.get_size()
 killer_image_width, killer_image_height = killer_image.get_size()
+killer1_image_width, killer1_image_height = killer1_image.get_size()
 
 fighter_is_moving_left, fighter_is_moving_right = False, False
 
 fighter_x, fighter_y = screen_width / 2 - fighter_image_width / 2, screen_height - fighter_image_height
 alcohol_x, alcohol_y = 0, 0
 killer_x, killer_y = randint(0, screen_width - killer_image_width), 0
-fighter_step = 2
+fighter_step = 5
 alcohol_step = 5
-killer_step = 0.5
+killer_step = 2
 alcohol_was_fired = False
 
 while True:
@@ -63,8 +81,20 @@ while True:
         alcohol_y = alcohol_y - alcohol_step
 
     screen.fill(screencolor)
+
+    if counter != len(image_counter) - 1:
+        screen.blit(image_counter[counter], (0, 0))
+    else:
+        screen.blit(fighter_image, (0, 0))
+        counter = 0
+
     screen.blit(fighter_image, (fighter_x, fighter_y))
-    screen.blit(killer_image, (killer_x, killer_y))
+
+    if counter % 2:
+        screen.blit(killer1_image, (killer_x, killer_y))
+    else:
+        screen.blit(killer_image, (killer_x, killer_y))
+
     if alcohol_was_fired:
         screen.blit(alcohol_image, (alcohol_x, alcohol_y))
 
@@ -73,5 +103,7 @@ while True:
             killer_y < alcohol_y < killer_y + killer_image_height - alcohol_image_height:
         alcohol_was_fired = False
         killer_x, killer_y = randint(0, screen_width - killer_image_width), 0
+        counter = counter + 1
 
     pygame.display.update()
+    clock.tick(60)
