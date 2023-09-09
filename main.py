@@ -13,7 +13,7 @@ text_counter = "XLOP"
 text_surface = text_font.render('Вымпил = ', False, 'White')
 text_game_over = text_font.render("Игрок 2 не домпил!", False, 'White')
 text_game_over1 = text_font.render("Ты проиграл!", False, 'Red')
-text_success1 = text_font.render("Ты победил! Началась", False, 'Green')
+text_success1 = text_font.render("Ты помбедил! Началась", False, 'Green')
 text_success2 = text_font.render("Чистая эмпирика!", False, 'White')
 
 screen_width, screen_height = 1024, 774
