@@ -6,6 +6,9 @@ from random import randint
 pygame.init()
 
 clock = pygame.time.Clock()
+text_font = pygame.font.Font('images/3997-font.otf', 70)
+text_counter = "XLOP"
+text_surface = text_font.render('Вымпил = ', False, 'White')
 
 screen_width, screen_height = 1024, 774
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -30,6 +33,7 @@ killer_image = pygame.image.load('images/player2.png')
 killer1_image = pygame.image.load('images/player2_alternative.png')
 
 counter = 0
+smoke_counter = 0
 image_counter = [back0, back1, back2, back3, back4, back5, back6, back7, back8, back9, back0]
 
 fighter_image_width, fighter_image_height = fighter_image.get_size()
@@ -87,6 +91,7 @@ while True:
     else:
         screen.blit(fighter_image, (0, 0))
         counter = 0
+        smoke_counter = 0
 
     screen.blit(fighter_image, (fighter_x, fighter_y))
 
@@ -104,6 +109,14 @@ while True:
         alcohol_was_fired = False
         killer_x, killer_y = randint(0, screen_width - killer_image_width), 0
         counter = counter + 1
+        smoke_counter = smoke_counter + 1
 
+    if counter % 2:
+        text_surface = text_font.render('Вымпил! = ' + str(counter) + " и закурил " + str(smoke_counter), False, 'White')
+        print(smoke_counter)
+    else:
+        text_surface = text_font.render('Вымпил! = ' + str(counter), False, 'White')
+
+    screen.blit(text_surface, (10, screen_height / 200))
     pygame.display.update()
     clock.tick(60)
