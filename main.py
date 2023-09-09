@@ -7,8 +7,14 @@ pygame.init()
 
 clock = pygame.time.Clock()
 text_font = pygame.font.Font('images/3997-font.otf', 70)
+sound1 = pygame.mixer.Sound('images/bottle-open-14895-trim.mp3')
+sound2 = pygame.mixer.Sound('images/match-sizzle-02-104778.mp3')
 text_counter = "XLOP"
 text_surface = text_font.render('Вымпил = ', False, 'White')
+text_game_over = text_font.render("Игрок 2 не вымпил!", False, 'White')
+text_game_over1 = text_font.render("Ты проиграл!", False, 'Red')
+text_success1 = text_font.render("Ты победил! Началась", False, 'Green')
+text_success2 = text_font.render("Чистая эмпирика!", False, 'White')
 
 screen_width, screen_height = 1024, 774
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -51,7 +57,11 @@ alcohol_step = 5
 killer_step = 2
 alcohol_was_fired = False
 
-while True:
+
+player1_won = False
+game_is_running = True
+
+while game_is_running:
     for x in pygame.event.get():
         if x.type == pygame.QUIT:
             sys.exit()
@@ -110,13 +120,39 @@ while True:
         killer_x, killer_y = randint(0, screen_width - killer_image_width), 0
         counter = counter + 1
         smoke_counter = smoke_counter + 1
+        sound1.play()
+
+    if counter == len(image_counter) - 1:
+        player1_won = True
+        game_is_running = False
 
     if counter % 2:
-        text_surface = text_font.render('Вымпил! = ' + str(counter) + " и закурил " + str(smoke_counter), False, 'White')
-        print(smoke_counter)
+        text_surface = text_font.render('Вымпил! = ' + str(counter) + " и закурил " + str(smoke_counter), False,
+                                        'White')
+        # print(smoke_counter)
+        # sound2.play()
     else:
         text_surface = text_font.render('Вымпил! = ' + str(counter), False, 'White')
+        # sound1.play()
 
     screen.blit(text_surface, (10, screen_height / 200))
     pygame.display.update()
+
+    if killer_y + killer_image_height > fighter_y:
+        game_is_running = False
     clock.tick(60)
+
+
+if player1_won:
+    screen.blit(text_success1, (70, 100))
+    screen.blit(text_success2, (150, 200))
+    pygame.display.update()
+    pygame.time.wait(5000)
+    pygame.quit()
+
+else:
+    screen.blit(text_game_over1, (150, 100))
+    screen.blit(text_game_over, (150, 200))
+    pygame.display.update()
+    pygame.time.wait(5000)
+    pygame.quit()
